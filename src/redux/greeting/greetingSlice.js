@@ -7,7 +7,7 @@ const initialState = {
   error: undefined,
 };
 
-export const fetchGreeting = createAsyncThunk('greetings/random', async () => {
+export const getGreeting = createAsyncThunk('greetings/random', async () => {
   const greeting = await axios.get('http://localhost:3000/api/greetings');
   return greeting.data;
 });
@@ -16,14 +16,14 @@ const greetingSlice = createSlice({
   name: 'greeting',
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchGreeting.pending, (state) => {
+    builder.addCase(getGreeting.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchGreeting.fulfilled, (state, action) => {
+    builder.addCase(getGreeting.fulfilled, (state, action) => {
       state.isLoading = false;
       state.greeting = action.payload;
     });
-    builder.addCase(fetchGreeting.rejected, (state, action) => {
+    builder.addCase(getGreeting.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     });
